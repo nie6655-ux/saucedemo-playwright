@@ -41,11 +41,11 @@ test.describe('Login Tests', () => {
         await test.step('Verify user is redirect to inventory page but product images are incorrect', async () => {
             await expect(page).toHaveURL(/inventory\.html/);
 
-            const productImages = await inventoryPage.productImages;
+            const productImages = inventoryPage.productImages;
             const expectedImageCount = 6;
 
             await expect(productImages).toHaveCount(expectedImageCount);
-            
+
             for (let i = 0; i < expectedImageCount; i++) {
                 const image = productImages.nth(i);
                 await expect.soft(image, `Product image ${i + 1} should be visible`).toBeVisible();
