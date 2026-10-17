@@ -1,5 +1,6 @@
 import { test, expect } from '../../fixtures/pageFixtures';
 import { ENV } from '../../utils/env';
+import { USERS } from '../../test-data/user';
 
 test.describe('Login Tests', () => {
 
@@ -10,7 +11,7 @@ test.describe('Login Tests', () => {
     test('Verify login is successful for valid credentials', async ({ loginPage, page }) => {
         
         await test.step('Login with valid credentials', async () => {
-            await loginPage.login( ENV.USERNAME, ENV.PASSWORD);
+            await loginPage.login(USERS.STANDARD_USER, ENV.PASSWORD);
         });
         
         await test.step('Verify user is redirected to inventory page', async () => {
@@ -22,7 +23,7 @@ test.describe('Login Tests', () => {
     test('Verify login fails for locked out user', async ({ loginPage }) => {
 
         await test.step('Login with locked out user', async () => {
-            await loginPage.login(ENV.LOCKED_OUT_USERNAME, ENV.PASSWORD);
+            await loginPage.login(USERS.LOCKED_OUT_USER, ENV.PASSWORD);
         });
 
         await test.step('Verify error message is displayed', async () => {
@@ -34,7 +35,7 @@ test.describe('Login Tests', () => {
     test('Verify login succeeds for problem user but incorrect product images are displayed', async ({ loginPage, inventoryPage, page }) => {
 
         await test.step('Login with problem  user', async () => {
-            await loginPage.login(ENV.PROBLEM_USER, ENV.PASSWORD);
+            await loginPage.login(USERS.PROBLEM_USER, ENV.PASSWORD);
         });
 
         await test.step('Verify user is redirect to inventory page but product images are incorrect', async () => {
