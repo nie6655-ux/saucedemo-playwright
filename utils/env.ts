@@ -4,7 +4,12 @@ export const ENV = {
 };
 
 function getRequiredEnvVar(varName: string): string {
-    const value = process.env[varName];
+    let value = process.env[varName];
+
+    if (varName !== 'SAUCEDEMO_PASSWORD') {
+        value = value?.trim();
+    }
+
     if (!value) {
         throw new Error(`Environment variable ${varName} is required but not set.`);
     }
