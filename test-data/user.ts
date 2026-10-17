@@ -2,4 +2,4 @@ export const USERS = {
     STANDARD_USER: "standard_user",
     LOCKED_OUT_USER: "locked_out_user",
     PROBLEM_USER: "problem_user"
-}
+} as const;
