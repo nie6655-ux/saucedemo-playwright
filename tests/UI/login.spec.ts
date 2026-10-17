@@ -40,18 +40,17 @@ test.describe('Login Tests', () => {
 
         await test.step('Verify user is redirect to inventory page but product images are incorrect', async () => {
             await expect(page).toHaveURL(/inventory\.html/);
-            await expect(inventoryPage.productImageOne).toBeVisible();
-            await expect(inventoryPage.productImageTwo).toBeVisible();
-            await expect(inventoryPage.productImageThree).toBeVisible();
-            await expect(inventoryPage.productImageFour).toBeVisible();
-            await expect(inventoryPage.productImageFive).toBeVisible();
-            await expect(inventoryPage.productImageSix).toBeVisible();
-            await expect(inventoryPage.productImageOne).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
-            await expect(inventoryPage.productImageTwo).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
-            await expect(inventoryPage.productImageThree).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
-            await expect(inventoryPage.productImageFour).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
-            await expect(inventoryPage.productImageFive).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
-            await expect(inventoryPage.productImageSix).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
+
+            const productImages = inventoryPage.productImages;
+            const expectedImageCount = 6;
+
+            await expect(productImages).toHaveCount(expectedImageCount);
+
+            for (let i = 0; i < expectedImageCount; i++) {
+                const image = productImages.nth(i);
+                await expect.soft(image, `Product image ${i + 1} should be visible`).toBeVisible();
+                await expect.soft(image, `Product image ${i + 1} should have the expected src attribute`).toHaveAttribute('src', /assets\/sl-404-.*\.jpg/);
+            }
         });
     });
 });
